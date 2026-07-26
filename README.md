@@ -7,16 +7,41 @@ Senior High School at Golden Faith Academy, covering the STEM, ABM, HUMSS and IC
 
 This is the landing page. Subject pages and the material itself are not in yet.
 
-## Disclaimer
+## Notice and policy
 
-An independent student project, published as portfolio work. It is not operated by, endorsed by
-or affiliated with Golden Faith Academy, its administration or its faculty. The school and
-strand names appear only to describe who the material is for. Nothing here is intended to
-reflect badly on the academy or anyone who works there; if something misrepresents the school
-or should not be public, open an issue and it comes down.
+The full version is on the site under [Notice, policy and takedown](https://rexsx.github.io/the-shelf/#notice).
+In short:
 
-The hub is for study material only. It does not host answers to graded work and will not accept
-them.
+**Independent.** A student-built project published as portfolio work. Not operated by, endorsed
+by or affiliated with Golden Faith Academy, its administration or its faculty. The school name,
+crest and strand names appear only to describe who the material is for. The official school site
+is https://www.gfa.edu.ph/.
+
+**School rules come first.** Anything the administration or a teacher asks us to change, credit
+differently, restrict or remove is changed, credited, restricted or removed, without asking for
+a reason. Where a school policy and anything here conflict, the school policy wins.
+
+**Access is left where the school set it.** Some links open only with a Golden Faith Academy
+account, because that is how the teacher shared the file. The hub links material where it
+already lives; it does not host copies, mirror files or route around a sign-in. Circumventing
+that kind of restriction breaks school rules and is an offence under the Cybercrime Prevention
+Act of 2012 (RA 10175).
+
+**Study material only.** No answers to graded work, and none will be accepted.
+
+**Copyright.** Material stays with whoever made it. What is linked is openly licensed, published
+free by its author, or shared for classroom use under the educational provisions of the
+Intellectual Property Code of the Philippines (RA 8293), with credit to the source. To have
+something removed, email the address in the contact section: name the item and it comes down,
+discussion afterwards.
+
+**Privacy and conduct.** No accounts, analytics, cookies, trackers or third-party requests, so
+there is no personal data to mishandle under the Data Privacy Act of 2012 (RA 10173). Nothing
+here may name, picture, rank or target any student, teacher or staff member, per DepEd's Child
+Protection Policy (DepEd Order No. 40, s. 2012) and the Anti-Bullying Act of 2013 (RA 10627).
+
+This is a statement of how the project is run, not legal advice. If the academy would rather any
+of it were worded differently, their wording is used instead.
 
 ## Running it
 

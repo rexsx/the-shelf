@@ -1212,6 +1212,38 @@ main[id] { scroll-margin-top: clamp(84px, 12vh, 124px); }
 
 .notice a:hover { border-bottom-color: var(--accent); }
 
+.notice-foot {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--rule-strong);
+  padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.notice-foot p {
+  font-size: .84rem;
+  color: var(--ink-faint);
+  max-width: 78ch;
+}
+
+.section-note {
+  margin: clamp(1.75rem, 3.5vw, 2.5rem) 0 0;
+  padding-left: 1.2rem;
+  border-left: 2px solid var(--gold-ink);
+  font-family: var(--sans);
+  font-size: .86rem;
+  line-height: 1.72;
+  color: var(--ink-faint);
+  max-width: 68ch;
+}
+
+.section-note a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s var(--ease);
+}
+
+.section-note a:hover { border-bottom-color: var(--accent); }
+
 .notice .label { display: block; margin-bottom: 1.4rem; }
 
 .closing {
