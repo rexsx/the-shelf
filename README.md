@@ -3,6 +3,8 @@
 The front page for a shared library of handouts, reviewers, lesson videos and references for
 Senior High School at Golden Faith Academy, covering the STEM, ABM, HUMSS and ICT strands.
 
+**Live:** https://rexsx.github.io/the-shelf/
+
 This is the landing page. Subject pages and the material itself are not in yet.
 
 ## Disclaimer
