@@ -101,6 +101,54 @@
     update();
   }
 
+  function splitHeadlines() {
+    if (reduceMotion) return;
+
+    document.querySelectorAll(".display").forEach(function (heading) {
+      var pieces = [];
+
+      Array.prototype.slice.call(heading.childNodes).forEach(function (node) {
+        if (node.nodeType === 3) {
+          node.textContent.split(/(\s+)/).forEach(function (chunk) {
+            if (!chunk) return;
+            if (/^\s+$/.test(chunk)) {
+              pieces.push(document.createTextNode(chunk));
+              return;
+            }
+            var word = document.createElement("span");
+            word.className = "word";
+            word.textContent = chunk;
+            pieces.push(word);
+          });
+          return;
+        }
+
+        if (node.nodeType === 1) {
+          var wrapper = document.createElement("span");
+          wrapper.className = "word";
+          wrapper.appendChild(node.cloneNode(true));
+          pieces.push(wrapper);
+          return;
+        }
+
+        pieces.push(node.cloneNode(true));
+      });
+
+      var words = pieces.filter(function (piece) {
+        return piece.nodeType === 1 && piece.className === "word";
+      });
+
+      if (words.length < 2) return;
+
+      heading.textContent = "";
+      pieces.forEach(function (piece) { heading.appendChild(piece); });
+      words.forEach(function (word, index) {
+        word.style.transitionDelay = (index * 0.045).toFixed(3) + "s";
+      });
+      heading.classList.add("has-words");
+    });
+  }
+
   function initReveal() {
     var targets = document.querySelectorAll("[data-reveal]");
     if (!targets.length) return;
@@ -203,6 +251,7 @@
     initTheme();
     initNav();
     initProgress();
+    splitHeadlines();
     initReveal();
     initScrollSpy();
     initSpotlight();
