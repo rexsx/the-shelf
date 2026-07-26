@@ -109,6 +109,21 @@
 
     document.querySelectorAll(".display").forEach(function (heading) {
       var pieces = [];
+      var lastWord = null;
+      var separated = true;
+
+      function addToWord(node) {
+        if (!separated && lastWord) {
+          lastWord.appendChild(node);
+          return;
+        }
+        var word = document.createElement("span");
+        word.className = "word";
+        word.appendChild(node);
+        pieces.push(word);
+        lastWord = word;
+        separated = false;
+      }
 
       Array.prototype.slice.call(heading.childNodes).forEach(function (node) {
         if (node.nodeType === 3) {
@@ -116,21 +131,16 @@
             if (!chunk) return;
             if (/^\s+$/.test(chunk)) {
               pieces.push(document.createTextNode(chunk));
+              separated = true;
               return;
             }
-            var word = document.createElement("span");
-            word.className = "word";
-            word.textContent = chunk;
-            pieces.push(word);
+            addToWord(document.createTextNode(chunk));
           });
           return;
         }
 
         if (node.nodeType === 1) {
-          var wrapper = document.createElement("span");
-          wrapper.className = "word";
-          wrapper.appendChild(node.cloneNode(true));
-          pieces.push(wrapper);
+          addToWord(node.cloneNode(true));
           return;
         }
 
