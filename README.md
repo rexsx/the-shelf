@@ -55,12 +55,26 @@ numbered table of contents on the cover, and a folio at the foot.
   made visible.
 - **Grain** is an inline SVG turbulence filter at three and a half percent, fixed over everything.
   It keeps a flat dark background from looking like an empty div.
-- **Motion is small on purpose.** Sections rise eighteen pixels into place on first view through
-  an IntersectionObserver; hover states grow a hairline rather than move a box. All of it is
-  disabled under `prefers-reduced-motion`. Content is visible without JavaScript, because the
-  reveal styles are scoped behind a `.js` class that only exists once the script runs.
+- **Two themes, both designed.** Light is not an inverted dark; it has its own accent, rule,
+  aurora and glow strengths so contrast holds on paper white. The choice follows the system
+  until the reader picks one, after which their pick wins and is remembered. An inline script in
+  `<head>` sets `data-theme` before first paint so the page never flashes the wrong theme.
+- **Motion is layered, not decorative noise.** Three blurred colour fields drift across the
+  cover on long, offset cycles; a pointer-tracked spotlight follows the cursor on devices that
+  actually have one; the rule beside each section number draws itself in as the section arrives;
+  cards lift and grow a coloured edge on hover. All of it is disabled under
+  `prefers-reduced-motion`, the spotlight is dropped on touch, and the heaviest aurora blob is
+  dropped below 720px so phones are not asked to composite three large blurs.
+- **Content is visible without JavaScript**, because the reveal styles are scoped behind a `.js`
+  class that only exists once the script runs.
 
 Every colour, size and easing curve is a custom property at the top of `main.css`.
+
+## Contact
+
+The page carries an email, a link for reporting problems and a link for contributing. All three
+live in the `#contact` section of `index.html` and in the footer. Change the address in those two
+places and nowhere else.
 
 ## Deploying
 
@@ -69,12 +83,21 @@ GitHub Pages, source set to "Deploy from a branch", branch `main`, folder `/ (ro
 
 ## Browser support
 
-Current Chrome, Edge, Firefox and Safari. `color-mix()` and `clamp()` are used throughout,
-which rules out anything older than roughly 2023.
+Current Chrome, Edge, Firefox, Safari and the Firefox-based browsers such as Zen.
+
+`color-mix()` is deliberately not used. It was, and a browser that does not understand it drops
+the whole declaration, which would have left the sticky masthead with no background at all.
+Each of those is now a plain colour or a gradient with an ordinary fallback.
+
+The rest degrades quietly. `text-wrap: balance` only affects where headings break.
+`background-clip: text` sits behind an `@supports` guard, so a browser without it gets a solid
+accent colour rather than invisible text. `overflow: clip`, `aspect-ratio` and `backdrop-filter`
+are all several years old.
 
 ## Privacy
 
-No accounts, no analytics, no cookies, no third party requests of any kind.
+No accounts, no analytics, no cookies, no third party requests of any kind. Local storage holds
+one key, `gfa-theme`, remembering whether you picked light or dark.
 
 ## Licence
 

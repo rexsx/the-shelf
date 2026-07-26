@@ -1,5 +1,57 @@
 (function () {
+  var THEME_KEY = "gfa-theme";
+  var root = document.documentElement;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function storedTheme() {
+    try {
+      return window.localStorage.getItem(THEME_KEY);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function initTheme() {
+    var toggle = document.querySelector("[data-theme-toggle]");
+    var meta = document.querySelector('meta[name="theme-color"]');
+
+    function sync() {
+      var current = root.getAttribute("data-theme");
+      var next = current === "dark" ? "light" : "dark";
+      if (toggle) toggle.setAttribute("aria-label", "Switch to " + next + " theme");
+      if (meta) meta.setAttribute("content", current === "dark" ? "#070a12" : "#f7f9fc");
+    }
+
+    function apply(theme, remember) {
+      root.setAttribute("data-theme", theme);
+      if (remember) {
+        try {
+          window.localStorage.setItem(THEME_KEY, theme);
+        } catch (err) {
+          sync();
+          return;
+        }
+      }
+      sync();
+    }
+
+    sync();
+
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        apply(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true);
+      });
+    }
+
+    var system = window.matchMedia("(prefers-color-scheme: light)");
+    var onSystemChange = function (event) {
+      if (storedTheme()) return;
+      apply(event.matches ? "light" : "dark", false);
+    };
+
+    if (system.addEventListener) system.addEventListener("change", onSystemChange);
+    else if (system.addListener) system.addListener(onSystemChange);
+  }
 
   function initNav() {
     var head = document.querySelector(".masthead");
@@ -33,9 +85,8 @@
     var ticking = false;
 
     function update() {
-      var doc = document.documentElement;
-      var span = doc.scrollHeight - doc.clientHeight;
-      var ratio = span > 0 ? Math.min(1, doc.scrollTop / span) : 0;
+      var span = root.scrollHeight - root.clientHeight;
+      var ratio = span > 0 ? Math.min(1, root.scrollTop / span) : 0;
       bar.style.transform = "scaleX(" + ratio.toFixed(4) + ")";
       ticking = false;
     }
@@ -54,13 +105,13 @@
     var targets = document.querySelectorAll("[data-reveal]");
     if (!targets.length) return;
 
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-      targets.forEach(function (node) { node.classList.add("is-visible"); });
-      return;
-    }
-
     function revealAll() {
       targets.forEach(function (node) { node.classList.add("is-visible"); });
+    }
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      revealAll();
+      return;
     }
 
     var observer = new IntersectionObserver(function (entries) {
@@ -116,16 +167,45 @@
     pairs.forEach(function (pair) { observer.observe(pair.section); });
   }
 
+  function initSpotlight() {
+    var cover = document.querySelector(".cover");
+    if (!cover || reduceMotion) return;
+    var spot = cover.querySelector(".spotlight");
+    if (!spot || !window.matchMedia("(hover: hover)").matches) return;
+
+    var ticking = false;
+    var x = 50;
+    var y = 30;
+
+    cover.addEventListener("pointermove", function (event) {
+      var box = cover.getBoundingClientRect();
+      x = ((event.clientX - box.left) / box.width) * 100;
+      y = ((event.clientY - box.top) / box.height) * 100;
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        spot.style.setProperty("--mx", x.toFixed(2) + "%");
+        spot.style.setProperty("--my", y.toFixed(2) + "%");
+        ticking = false;
+      });
+    });
+
+    cover.addEventListener("pointerenter", function () { cover.dataset.pointer = "true"; });
+    cover.addEventListener("pointerleave", function () { cover.dataset.pointer = "false"; });
+  }
+
   function initYear() {
     var slot = document.querySelector("[data-year]");
     if (slot) slot.textContent = new Date().getFullYear();
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initTheme();
     initNav();
     initProgress();
     initReveal();
     initScrollSpy();
+    initSpotlight();
     initYear();
   });
 })();
