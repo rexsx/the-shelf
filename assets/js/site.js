@@ -59,6 +59,10 @@
       return;
     }
 
+    function revealAll() {
+      targets.forEach(function (node) { node.classList.add("is-visible"); });
+    }
+
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
@@ -68,6 +72,10 @@
     }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
 
     targets.forEach(function (node) { observer.observe(node); });
+
+    window.setTimeout(function () {
+      if (!document.querySelector("[data-reveal].is-visible")) revealAll();
+    }, 2500);
   }
 
   function initYear() {

@@ -1023,4 +1023,9 @@ a { color: inherit; }
 @media print {
   body { background: #fff; color: #000; }
   body::after, .grid-lines, .masthead, .progress { display: none !important; }
+
+  .js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
