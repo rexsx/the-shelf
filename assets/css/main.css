@@ -19,6 +19,9 @@
   --accent-bright: #83bcff;
   --accent-wash: rgba(77, 155, 245, .11);
 
+  --gold: #fff128;
+  --gold-ink: #cdbe4c;
+
   --teal: #34d1bf;
   --sky: #3fa9f5;
   --indigo: #7b8cf7;
@@ -116,6 +119,9 @@ a { color: inherit; }
   padding-inline: var(--gutter);
 }
 
+section[id],
+main[id] { scroll-margin-top: clamp(84px, 12vh, 124px); }
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -198,25 +204,20 @@ a { color: inherit; }
   flex: 0 0 auto;
 }
 
-.monogram {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--rule-strong);
-  background: linear-gradient(160deg, var(--accent-wash), transparent 70%);
-  font-family: var(--sans);
-  font-size: .6rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: var(--accent-bright);
-  transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+.crest {
+  height: 44px;
+  width: auto;
+  display: block;
+  flex: 0 0 auto;
+  transition: transform .45s var(--ease), filter .45s var(--ease);
 }
 
-.wordmark:hover .monogram {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-wash);
+.wordmark:hover .crest {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 5px 16px rgba(255, 241, 40, .3));
 }
+
+.colophon .crest { height: 54px; }
 
 .wordmark-text {
   display: flex;
@@ -276,6 +277,10 @@ a { color: inherit; }
 .masthead-nav a:hover { color: var(--ink); }
 
 .masthead-nav a:hover::after { transform: scaleX(1); }
+
+.masthead-nav a[aria-current="true"] { color: var(--ink); }
+
+.masthead-nav a[aria-current="true"]::after { transform: scaleX(1); }
 
 .masthead-nav .counter {
   font-family: var(--mono);
@@ -462,6 +467,8 @@ a { color: inherit; }
   padding-left: .45rem;
 }
 
+.cover .kicker .label { color: var(--gold-ink); }
+
 .cover-foot {
   display: flex;
   flex-wrap: wrap;
@@ -470,6 +477,11 @@ a { color: inherit; }
   margin-top: clamp(3rem, 8vw, 6rem);
   padding-top: 1.2rem;
   border-top: 1px solid var(--rule);
+}
+
+.cover-foot .motto {
+  color: var(--gold-ink);
+  font-style: normal;
 }
 
 .section {
@@ -813,6 +825,19 @@ a { color: inherit; }
   inset: auto 0 -20% 0;
   height: 70%;
   background: radial-gradient(40% 60% at 50% 100%, rgba(77, 155, 245, .12), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.closing-crest {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(240px, 30vw, 400px);
+  aspect-ratio: 307 / 360;
+  transform: translate(-50%, -50%);
+  background: url("../img/gfa-crest.png") no-repeat center / contain;
+  opacity: .05;
   pointer-events: none;
   z-index: -1;
 }

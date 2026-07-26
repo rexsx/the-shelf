@@ -78,6 +78,44 @@
     }, 2500);
   }
 
+  function initScrollSpy() {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.masthead-nav a[href^="#"]'));
+    var pairs = links.map(function (link) {
+      return { link: link, section: document.querySelector(link.getAttribute("href")) };
+    }).filter(function (pair) { return pair.section; });
+
+    if (!pairs.length || !("IntersectionObserver" in window)) return;
+
+    var active = null;
+
+    function mark(pair) {
+      if (active === pair) return;
+      if (active) active.link.removeAttribute("aria-current");
+      if (pair) pair.link.setAttribute("aria-current", "true");
+      active = pair;
+    }
+
+    var observer = new IntersectionObserver(function () {
+      var middle = window.innerHeight / 2;
+      var best = null;
+      var bestDistance = Infinity;
+
+      pairs.forEach(function (pair) {
+        var box = pair.section.getBoundingClientRect();
+        if (box.bottom < 0 || box.top > window.innerHeight) return;
+        var distance = Math.abs(box.top - middle);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          best = pair;
+        }
+      });
+
+      mark(best);
+    }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+
+    pairs.forEach(function (pair) { observer.observe(pair.section); });
+  }
+
   function initYear() {
     var slot = document.querySelector("[data-year]");
     if (slot) slot.textContent = new Date().getFullYear();
@@ -87,6 +125,7 @@
     initNav();
     initProgress();
     initReveal();
+    initScrollSpy();
     initYear();
   });
 })();
