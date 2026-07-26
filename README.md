@@ -50,11 +50,11 @@ numbered table of contents on the cover, and a folio at the foot.
   accent, and the strands run teal → sky → indigo → violet across it. Each strand colour arrives
   as a `--tone` custom property on the element, so `.strand-row` and `.feature` are one class
   each and recolour without a variant.
-- **A real twelve-column grid is drawn on the page.** `.grid-lines` is a fixed, aligned overlay
-  of hairlines at five percent opacity, hidden below 1000px. It is the same grid the layout uses,
-  made visible.
-- **Grain** is an inline SVG turbulence filter at three and a half percent, fixed over everything.
-  It keeps a flat dark background from looking like an empty div.
+- **Depth lives at the edges, never behind text.** A soft vignette darkens the outer frame of the
+  page and an inline SVG turbulence filter lays grain over everything at three and a half percent,
+  so a flat background does not read as an empty div. An earlier version drew the twelve-column
+  layout grid on the page as hairlines; it was removed because faint vertical lines behind body
+  text read as a rendering fault rather than as structure.
 - **Two themes, both designed.** Light is not an inverted dark; it has its own accent, rule,
   aurora and glow strengths so contrast holds on paper white. The choice follows the system
   until the reader picks one, after which their pick wins and is remembered. An inline script in
