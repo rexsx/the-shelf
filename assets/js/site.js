@@ -84,10 +84,13 @@
     if (!bar) return;
     var ticking = false;
 
+    var head = document.querySelector(".masthead");
+
     function update() {
       var span = root.scrollHeight - root.clientHeight;
       var ratio = span > 0 ? Math.min(1, root.scrollTop / span) : 0;
       bar.style.transform = "scaleX(" + ratio.toFixed(4) + ")";
+      if (head) head.classList.toggle("is-stuck", root.scrollTop > 8);
       ticking = false;
     }
 
