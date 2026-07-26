@@ -4,8 +4,11 @@ Small repository, short rules.
 
 ## Before you open a pull request
 
-- Keep it dependency free. No framework, no build step, no package manager. The page has to
-  keep working when it is opened straight from the filesystem.
+- Keep it dependency free. No framework, no package manager. The page has to keep working when
+  it is opened straight from the filesystem.
+- Leave the asset references in the HTML alone. They are plain paths on purpose, and the deploy
+  workflow adds a content hash to them so browsers pick up changes without anyone clearing a
+  cache. Do not commit a stamped `index.html`.
 - Two space indent. Double quotes in JavaScript and HTML attributes.
 - Add design tokens as custom properties at the top of `main.css` instead of hardcoding a hex
   value halfway down the file.

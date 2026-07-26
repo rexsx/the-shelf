@@ -103,8 +103,30 @@ places and nowhere else.
 
 ## Deploying
 
-GitHub Pages, source set to "Deploy from a branch", branch `main`, folder `/ (root)`.
-`.nojekyll` is present, so nothing gets rewritten on the way out.
+Push to `main`. The workflow in `.github/workflows/deploy.yml` publishes to GitHub Pages, so the
+Pages source is set to "GitHub Actions" rather than to a branch.
+
+### Why there is a workflow at all
+
+Browsers cache `main.css` and `site.js` by URL. Because those URLs never changed, a returning
+visitor kept the old stylesheet after every update and had to clear their cache to see the site
+as it actually is. Telling people to clear their cache is not a fix.
+
+`tools/stamp.js` reads each asset, takes a SHA-256 of its contents, and rewrites the references
+in the HTML to `main.css?v=<first ten hex characters>`. Change one byte of CSS and the URL
+changes with it, so the browser has no cached copy and has to fetch it. Change nothing and the
+URL is identical, so the cached copy is reused and the visit costs nothing. It is exact, rather
+than a guess at a sensible expiry time.
+
+The stamping happens in the workflow, not in the repository. Source files keep plain
+`assets/css/main.css` references so `index.html` still opens correctly straight from the
+filesystem with no build step for anyone editing the site. Run `node tools/stamp.js` by hand to
+see what it does; it is idempotent, and `git checkout -- index.html 404.html` puts the plain
+references back.
+
+One limit worth knowing: GitHub Pages serves HTML with a ten minute cache and gives you no way
+to change that header. A returning visitor can therefore see the previous HTML for up to ten
+minutes after a deploy, and it then corrects itself. The assets that HTML points at are exact.
 
 ## Browser support
 
