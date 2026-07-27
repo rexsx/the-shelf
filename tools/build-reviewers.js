@@ -26,8 +26,17 @@ const SUBJECT_NAMES = {
   UCSP: "Understanding Culture, Society and Politics"
 };
 
-const SECTION = /^(?:[IVXLC]+\.|[A-Z]\.|\d+\.)\s+\S/;
-const NOISE = /^(page \d+|\d+\s*\|\s*page|handout\s*\d*|copyright|all rights reserved)/i;
+const NOISE = /^(page \d+|\d+\s*\|\s*page|[A-Z0-9]+-HANDOUT\s*\d*|copyright|all rights reserved|prepared by|reference[s]?:)/i;
+const FILLER = /^(in this (lesson|module|topic)|at the end of this|by the end of this|let us|let's|now that we|in the previous|as we have seen|good day|hello|welcome)/i;
+
+function isHeading(line) {
+  if (line.length > 95) return false;
+  if (/^(?:[IVXLC]+[.)]|[A-Z][.)]|\d+[.)])\s+\S/.test(line)) return true;
+  const letters = line.replace(/[^A-Za-z]/g, "");
+  if (letters.length >= 3 && letters === letters.toUpperCase() && line.length <= 80) return true;
+  if (/^[A-Z][A-Za-z0-9 ,'()/-]{2,60}$/.test(line) && !/[.!?]$/.test(line) && line.split(/\s+/).length <= 9) return true;
+  return false;
+}
 
 function ascii(text) {
   return String(text)
@@ -49,20 +58,57 @@ function cleanLines(text) {
     .filter(l => l && !NOISE.test(l));
 }
 
+const CARRIES_MEANING = new RegExp([
+  "\\b(is|are|was|were)\\s+(a|an|the|defined|called|known|composed|made|used)\\b",
+  "\\b(refers? to|means|consists? of|comprises?|includes?|involves?|denotes?)\\b",
+  "\\b(types?|kinds?|forms?|categor(y|ies)|classes|stages?|steps?|phases?|levels?|" +
+    "factors?|characteristics?|features?|properties|functions?|principles?|elements?|" +
+    "causes?|effects?|advantages?|disadvantages?|examples?|formula|equation|rule|law)\\s+(of|are|is|include)\\b",
+  "^\\s*[-\\d]",
+  "\\b(must|should|always|never|equals?|therefore)\\b"
+].join("|"), "i");
+
+const NARRATIVE = new RegExp([
+  "^(in this|we will|we are going|you will|let us|as mentioned|as stated|as discussed)",
+  "\\b(interesting|imagine|think about|consider how|remember when|nowadays|in our daily lives)\\b"
+].join("|"), "i");
+
+function sentences(block) {
+  return block
+    .replace(/\(([^)]{0,50}\d{4}[^)]{0,25})\)/g, "")
+    .split(/(?<=[.!?])\s+(?=[A-Z0-9])/)
+    .map(s => s.replace(/\s+/g, " ").trim())
+    .filter(s => s.length > 25 && s.length < 400)
+    .filter(s => !FILLER.test(s) && !NARRATIVE.test(s))
+    .filter(s => CARRIES_MEANING.test(s));
+}
+
 function outlineOf(text) {
   const lines = cleanLines(text);
-  const sections = [];
+  const raw = [];
+  let current = null;
 
-  lines.forEach((line, i) => {
-    if (!SECTION.test(line) || line.length > 90) return;
-    const heading = line.replace(/\s*[:.]\s*$/, "");
-    let gist = "";
-    for (let j = i + 1; j < Math.min(i + 6, lines.length); j++) {
-      const next = lines[j];
-      if (SECTION.test(next)) break;
-      if (next.length > 45) { gist = next; break; }
+  lines.forEach(line => {
+    if (isHeading(line)) {
+      current = { heading: line.replace(/\s*[:.]\s*$/, ""), buffer: "" };
+      raw.push(current);
+      return;
     }
-    sections.push({ heading: heading, gist: gist });
+    if (!current) { current = { heading: "", buffer: "" }; raw.push(current); }
+    current.buffer += " " + line;
+  });
+
+  const seenPoint = {};
+  const sections = [];
+  raw.forEach(s => {
+    const kept = [];
+    sentences(s.buffer).forEach(p => {
+      const key = p.slice(0, 45).toLowerCase();
+      if (seenPoint[key]) return;
+      seenPoint[key] = true;
+      kept.push(p.length > 320 ? p.slice(0, 317) + "..." : p);
+    });
+    if (s.heading || kept.length) sections.push({ heading: s.heading, points: kept.slice(0, 12) });
   });
 
   const STOPWORD = /^(one|this|these|those|it|they|we|you|there|that|the|a|an|some|many|most|each|all|there's|his|her|their|its|such|other|another|both|no|not|if|when|where|how|why|what|who|in|on|at|for|as|by|with|from|but|and|or|so|then|thus|however|therefore|according|basically|generally|usually|today|now|here)$/i;
@@ -84,7 +130,7 @@ function outlineOf(text) {
     terms.push({ term: term, meaning: m[2].replace(/\s*[.;,]\s*$/, "") });
   });
 
-  return { sections: sections.slice(0, 14), terms: terms.slice(0, 12) };
+  return { sections: sections.slice(0, 30), terms: terms.slice(0, 14) };
 }
 
 function wrap(text, font, size, width) {
@@ -179,8 +225,9 @@ async function buildSubject(dir, code) {
     }
 
     topic.sections.forEach(s => {
-      write(s.heading, bold, 9.5, accent, 10, 0);
-      if (s.gist) write(s.gist, body, 9, soft, 20, 2);
+      if (s.heading) write(s.heading, bold, 9.5, accent, 10, 1);
+      s.points.forEach(p => write("- " + p, body, 8.8, soft, 20, 0));
+      if (s.points.length) y -= 3;
     });
 
     if (topic.terms.length) {
