@@ -40,7 +40,7 @@
   --bg-blur: rgba(7, 10, 18, .78);
   --ink: #eaeff7;
   --ink-soft: #9dabc2;
-  --ink-faint: #66748c;
+  --ink-faint: #8492a8;
   --rule: #171f2d;
   --rule-strong: #2a3648;
   --vignette: rgba(0, 0, 0, .55);
@@ -76,7 +76,7 @@
   --bg-blur: rgba(247, 249, 252, .82);
   --ink: #0b1220;
   --ink-soft: #46556f;
-  --ink-faint: #78869f;
+  --ink-faint: #55637a;
   --rule: #dee5f0;
   --rule-strong: #c1cddf;
   --vignette: rgba(11, 18, 32, .07);
@@ -86,10 +86,10 @@
   --accent-bright: #1257ad;
   --accent-wash: rgba(31, 111, 208, .08);
   --on-accent: #ffffff;
-  --gold-ink: #8a7415;
+  --gold-ink: #806b13;
 
-  --teal: #0d9184;
-  --sky: #1f7fd0;
+  --teal: #0b7a6f;
+  --sky: #1a6cb3;
   --indigo: #4f5fd8;
   --violet: #8244c9;
 

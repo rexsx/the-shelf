@@ -147,6 +147,19 @@ The rest degrades quietly. `text-wrap: balance` only affects where headings brea
 accent colour rather than invisible text. `overflow: clip`, `aspect-ratio` and `backdrop-filter`
 are all several years old.
 
+## Contrast
+
+Every piece of text on the page meets WCAG AA against the surface it actually sits on, in both
+themes. The worst case is 6.27:1 in dark and 4.69:1 in light, against a 4.5:1 requirement for
+body text.
+
+That is measured rather than assumed. The check walks every text node in the rendered page,
+resolves the real background by climbing to the nearest opaque ancestor, and computes the
+contrast ratio at the element's own font size and weight. Secondary text failed the first time
+it was run — the muted grey was 4.19:1 in dark and 3.49:1 in light, which is exactly the range
+where text looks fine to whoever chose it and disappears for everyone else. If you change a
+colour token, re-run the check before pushing.
+
 ## Privacy
 
 No accounts, no analytics, no cookies, no third party requests of any kind. Local storage holds
