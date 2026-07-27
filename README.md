@@ -55,8 +55,10 @@ If you want to serve it over HTTP rather than from the filesystem, any static se
 index.html            the landing page, one scroll from cover to colophon
 404.html
 assets/css/main.css   every style, including the type scale and the strand colours
-assets/js/site.js     nav, scroll progress, reveal on scroll, footer year
-assets/img/           icon
+assets/js/site.js     theme, nav, scroll progress, reveal on scroll, headline splitting
+assets/fonts/         Instrument Serif, roman and italic, with its OFL licence
+assets/img/           crest, icons, link preview
+tools/stamp.js        content-hashes assets at deploy time so caches update
 ```
 
 ## Design notes
@@ -65,12 +67,16 @@ Dark editorial on a blue ground. The page reads like a magazine spread rather th
 site: one display serif carrying the hierarchy, hairline rules doing the structural work, a
 numbered table of contents on the cover, and a folio at the foot.
 
-- **Three typefaces, none of them downloaded.** Display and body use a serif stack that lands on
-  Palatino Linotype on Windows, Iowan Old Style on Apple and Georgia as the floor. Labels and UI
-  text use the platform sans. Every numeral — section numbers, the contents list, the ledger —
-  is set in the system mono with `tabular-nums`, which is what makes the figures line up in a
-  column. Nothing is fetched from a third party and there is no reflow while a font loads. On a
-  school connection that matters more than a perfect letterform.
+- **One downloaded face, used only where it counts.** Headlines are set in Instrument Serif, a
+  high-contrast display serif under the SIL Open Font License. Two woff2 files, roman and italic,
+  latin subset only, 43 KB for the pair, served from `assets/fonts/` — so there is still no
+  third-party request anywhere on the page. The roman is preloaded, and `font-display: swap`
+  means text is readable before it arrives.
+- **Everything else is the platform's own.** Body copy is a serif stack landing on Palatino
+  Linotype, Iowan Old Style or Georgia; labels and UI text use the platform sans; numerals use
+  the system mono with `tabular-nums`, which is what makes figures line up in a column. Pairing a
+  sharp display serif against a humanist text serif is deliberate — the contrast between them is
+  what makes the headlines read as set rather than typed.
 - **The palette is a cool ramp, not four unrelated colours.** Azure `#4d9bf5` carries the primary
   accent, and the strands run teal → sky → indigo → violet across it. Each strand colour arrives
   as a `--tone` custom property on the element, so `.strand-row` and `.feature` are one class
@@ -148,4 +154,11 @@ one key, `gfa-theme`, remembering whether you picked light or dark.
 
 ## Licence
 
-MIT, see `LICENSE`.
+The site is MIT, see `LICENSE`.
+
+Instrument Serif, in `assets/fonts/`, is licensed separately under the SIL Open Font License 1.1
+and its licence travels with it in `assets/fonts/OFL.txt`. Copyright 2022 The Instrument Serif
+Project Authors. If you fork this and swap the typeface, delete those files with it.
+
+The Golden Faith Academy crest is the school's mark, used here by a student of the school to
+identify who the material is for. It is not covered by the MIT licence and comes out on request.
