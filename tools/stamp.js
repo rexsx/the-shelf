@@ -3,7 +3,7 @@ const path = require("path");
 const crypto = require("crypto");
 
 const root = path.resolve(__dirname, "..");
-const assets = ["assets/css/main.css", "assets/js/site.js", "assets/js/shelf.js", "assets/js/data.js"];
+const assets = ["assets/css/main.css", "assets/js/site.js", "assets/js/shelf.js", "assets/js/data.js", "assets/js/reviewers.js"];
 const pages = ["index.html", "404.html", "resources.html"];
 
 function escapeForRegExp(value) {

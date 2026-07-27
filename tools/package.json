@@ -1,0 +1,8 @@
+{
+  "name": "gfa-shelf-tools",
+  "private": true,
+  "description": "Build-time helpers. Not used by the site, which ships no dependencies.",
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  }
+}

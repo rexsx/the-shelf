@@ -3,9 +3,12 @@
   var root = document.querySelector("[data-shelf]");
   if (!data || !root) return;
 
+  var reviewers = window.REVIEWERS || {};
+
   var ICONS = {
     handout: '<path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M18 21H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h8l5 5v12a1 1 0 0 1-1 1z"/>',
-    video: '<circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/>'
+    video: '<circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/>',
+    download: '<path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 21h16"/>'
   };
 
   function esc(value) {
@@ -67,6 +70,13 @@
               '<h2 class="subject-name">' + esc(subject.name) + "</h2>" +
               '<span class="subject-count">' + topics.length + (topics.length === 1 ? " topic" : " topics") + "</span>" +
             "</div>" +
+            (reviewers[subject.code]
+              ? '<a class="reviewer-link" href="' + esc(reviewers[subject.code]) + '" target="_blank" rel="noopener">' +
+                  icon("download") +
+                  "<span><strong>Whole-subject reviewer</strong>" +
+                  "Every handout for " + esc(subject.code) + " in one file. Download it once and you have the subject offline.</span>" +
+                "</a>"
+              : "") +
             '<ol class="topic-list">' +
               topics.map(function (t) {
                 var links = [];

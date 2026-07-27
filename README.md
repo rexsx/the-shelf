@@ -7,6 +7,35 @@ Senior High School at Golden Faith Academy, covering the STEM, ABM, HUMSS and IC
 
 This is the landing page. Subject pages and the material itself are not in yet.
 
+## Whole-subject reviewers
+
+`tools/build-reviewers.js` merges every handout for a subject into one PDF, so a student can
+download a subject once and have it offline instead of opening eighteen links.
+
+```
+cd tools && npm install
+node tools/build-reviewers.js "<handouts folder>" "<output folder>"
+```
+
+It reads one folder per subject code, merges the PDFs in filename order, sets the document title,
+and reports the page count and file size for each. `pdf-lib` is a build-time dependency and lives
+only in `tools/`. The site itself still ships nothing.
+
+The merged files are **not** committed here, and should not be. They are the school's material,
+shared with students through school accounts, and this repository is public. Put them wherever
+the school's own access control still applies, then paste the link into
+`assets/js/reviewers.js`:
+
+```js
+window.REVIEWERS = {
+  PRECAL: "https://drive.google.com/file/d/.../view",
+  ...
+};
+```
+
+A subject with an empty string simply shows no reviewer link. That file is hand-edited and is
+never touched by `tools/import-resources.js`, so re-importing a semester will not wipe it.
+
 ## Notice and policy
 
 The full version is on the site under [Notice, policy and takedown](https://rexsx.github.io/the-shelf/#notice).
