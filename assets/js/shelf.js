@@ -3,7 +3,6 @@
   var root = document.querySelector("[data-shelf]");
   if (!data || !root) return;
 
-  var TONES = { stem: "var(--teal)", abm: "var(--sky)", humss: "var(--indigo)", ict: "var(--violet)" };
   var ICONS = {
     handout: '<path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M18 21H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h8l5 5v12a1 1 0 0 1-1 1z"/>',
     video: '<circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/>'
@@ -37,7 +36,7 @@
       return a + sem.subjects.reduce(function (b, sub) { return b + sub.topics.length; }, 0);
     }, 0);
     return '<button class="strand-tab" type="button" role="tab" data-strand="' + esc(s.id) + '" ' +
-      'style="--tone: ' + TONES[s.id] + '" aria-selected="' + (s.id === active) + '">' +
+      'aria-selected="' + (s.id === active) + '">' +
       esc(s.code) + ' <span>' + topics + "</span></button>";
   }).join("");
 
@@ -62,7 +61,7 @@
         shown += topics.length;
 
         blocks.push(
-          '<section class="subject-block" style="--tone: ' + TONES[strand.id] + '">' +
+          '<section class="subject-block">' +
             '<div class="subject-head">' +
               '<span class="subject-code">' + esc(subject.code) + "</span>" +
               '<h2 class="subject-name">' + esc(subject.name) + "</h2>" +

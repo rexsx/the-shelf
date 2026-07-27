@@ -228,33 +228,6 @@
     pairs.forEach(function (pair) { observer.observe(pair.section); });
   }
 
-  function initSpotlight() {
-    var cover = document.querySelector(".cover");
-    if (!cover || reduceMotion) return;
-    var spot = cover.querySelector(".spotlight");
-    if (!spot || !window.matchMedia("(hover: hover)").matches) return;
-
-    var ticking = false;
-    var x = 50;
-    var y = 30;
-
-    cover.addEventListener("pointermove", function (event) {
-      var box = cover.getBoundingClientRect();
-      x = ((event.clientX - box.left) / box.width) * 100;
-      y = ((event.clientY - box.top) / box.height) * 100;
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(function () {
-        spot.style.setProperty("--mx", x.toFixed(2) + "%");
-        spot.style.setProperty("--my", y.toFixed(2) + "%");
-        ticking = false;
-      });
-    });
-
-    cover.addEventListener("pointerenter", function () { cover.dataset.pointer = "true"; });
-    cover.addEventListener("pointerleave", function () { cover.dataset.pointer = "false"; });
-  }
-
   function initYear() {
     var slot = document.querySelector("[data-year]");
     if (slot) slot.textContent = new Date().getFullYear();
@@ -267,7 +240,6 @@
     splitHeadlines();
     initReveal();
     initScrollSpy();
-    initSpotlight();
     initYear();
   });
 })();
