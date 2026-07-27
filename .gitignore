@@ -5,3 +5,9 @@ desktop.ini
 .vscode/
 .idea/
 node_modules/
+_site/
+.playwright-mcp/
+*.jpg
+*.jpeg
+!assets/img/*.jpg
+!assets/img/*.jpeg
