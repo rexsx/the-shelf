@@ -71,10 +71,11 @@
               '<span class="subject-count">' + topics.length + (topics.length === 1 ? " topic" : " topics") + "</span>" +
             "</div>" +
             (reviewers[subject.code]
-              ? '<a class="reviewer-link" href="' + esc(reviewers[subject.code]) + '" target="_blank" rel="noopener">' +
+              ? '<a class="reviewer-link" href="' + esc(reviewers[subject.code]) + '" download>' +
                   icon("download") +
-                  "<span><strong>Whole-subject reviewer</strong>" +
-                  "Every handout for " + esc(subject.code) + " in one file. Download it once and you have the subject offline.</span>" +
+                  "<span><strong>Download the " + esc(subject.code) + " reviewer</strong>" +
+                  "Every topic in the subject as one study outline: section headings and key terms, a few pages instead of a few hundred. " +
+                  "Grab it once and you can revise offline.</span>" +
                 "</a>"
               : "") +
             '<ol class="topic-list">' +

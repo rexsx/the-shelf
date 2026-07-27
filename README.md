@@ -21,20 +21,19 @@ It reads one folder per subject code, merges the PDFs in filename order, sets th
 and reports the page count and file size for each. `pdf-lib` is a build-time dependency and lives
 only in `tools/`. The site itself still ships nothing.
 
-The merged files are **not** committed here, and should not be. They are the school's material,
-shared with students through school accounts, and this repository is public. Put them wherever
-the school's own access control still applies, then paste the link into
-`assets/js/reviewers.js`:
+A reviewer is not the handout. The script reads the text out of each handout, keeps the section
+headings, the first line under each, and any sentence that defines a term, and lays that out as
+an outline. A subject that runs to a couple of hundred pages comes out as six or seven. That is
+what makes it shareable: it is a summary students wrote a tool to produce, not a copy of the
+teacher's file.
 
-```js
-window.REVIEWERS = {
-  PRECAL: "https://drive.google.com/file/d/.../view",
-  ...
-};
-```
+The handouts themselves are **not** in this repository and should not be. They belong to the
+school and are shared through school accounts; the hub links to them where they already live.
+Only the outlines are committed, under `files/reviewers/`, at about 240 KB for all twelve.
 
-A subject with an empty string simply shows no reviewer link. That file is hand-edited and is
-never touched by `tools/import-resources.js`, so re-importing a semester will not wipe it.
+`assets/js/reviewers.js` maps a subject code to its file. A subject with an empty string shows
+no download link. That file is hand-edited and `tools/import-resources.js` never touches it, so
+re-importing a semester will not wipe it.
 
 ## Notice and policy
 

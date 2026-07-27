@@ -3,6 +3,7 @@
   "private": true,
   "description": "Build-time helpers. Not used by the site, which ships no dependencies.",
   "dependencies": {
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^2.4.5"
   }
 }
