@@ -236,19 +236,20 @@ section[id], main[id] { scroll-margin-top: clamp(80px, 11vh, 116px); }
   flex: 0 0 auto;
 }
 
-.crest {
-  height: 40px;
-  width: auto;
-  display: block;
-  flex: 0 0 auto;
+.wordmark-text { display: flex; flex-direction: column; line-height: 1.18; }
+
+.wordmark-text b::before {
+  content: "";
+  display: inline-block;
+  width: .5rem;
+  height: .5rem;
+  margin-right: .55rem;
+  vertical-align: .06em;
+  background: var(--accent);
   transition: transform .4s var(--ease);
 }
 
-.wordmark:hover .crest { transform: translateY(-1px); }
-
-.colophon .crest { height: 50px; }
-
-.wordmark-text { display: flex; flex-direction: column; line-height: 1.18; }
+.wordmark:hover .wordmark-text b::before { transform: rotate(45deg); }
 
 .wordmark-text b {
   font-family: var(--display);
@@ -929,17 +930,6 @@ section[id], main[id] { scroll-margin-top: clamp(80px, 11vh, 116px); }
   overflow-x: clip;
 }
 
-.closing-crest {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: clamp(220px, 28vw, 360px);
-  aspect-ratio: 307 / 360;
-  transform: translate(-50%, -50%);
-  background: url("../img/gfa-crest.png") no-repeat center / contain;
-  opacity: .045;
-  pointer-events: none;
-  z-index: -1;
-}
 
 .closing .kicker { justify-content: center; }
 .closing .kicker::after { display: none; }
@@ -1319,7 +1309,6 @@ section[id], main[id] { scroll-margin-top: clamp(80px, 11vh, 116px); }
   .masthead-nav a { padding-block: .9rem; border-bottom: 1px solid var(--rule); }
   .masthead-nav a::after { display: none; }
 
-  .crest { height: 36px; }
   .wordmark-text b { font-size: .95rem; }
 
   .strand-row { grid-template-columns: minmax(0, 1fr); row-gap: .45rem; }
@@ -1358,6 +1347,6 @@ section[id], main[id] { scroll-margin-top: clamp(80px, 11vh, 116px); }
 
 @media print {
   body { background: #fff; color: #000; }
-  body::before, body::after, .masthead, .progress, .closing-crest { display: none !important; }
+  body::before, body::after, .masthead, .progress { display: none !important; }
   .js [data-reveal] { opacity: 1 !important; transform: none !important; }
 }

@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" fill="#070a12"/>
-  <path d="M32 7 54 13v22c0 12.4-9.2 19.6-22 23-12.8-3.4-22-10.6-22-23V13z" fill="#fff128"/>
-  <path d="M32 7 54 13v22c0 12.4-9.2 19.6-22 23-12.8-3.4-22-10.6-22-23V13z" fill="none" stroke="#070a12" stroke-width="1.5"/>
-  <text x="32" y="41" text-anchor="middle" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#070a12" letter-spacing="-.5">GFA</text>
+  <rect width="64" height="64" rx="10" fill="#0a0d14"/>
+  <rect x="14" y="14" width="12" height="12" fill="#e0b13f"/>
+  <rect x="14" y="34" width="36" height="3" fill="#f4f6fa"/>
+  <rect x="14" y="42" width="36" height="3" fill="#93a1b6"/>
+  <rect x="14" y="50" width="22" height="3" fill="#93a1b6"/>
 </svg>
